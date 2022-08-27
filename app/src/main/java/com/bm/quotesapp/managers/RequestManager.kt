@@ -1,9 +1,7 @@
 package com.bm.quotesapp.managers
 
-import android.content.Context
-import com.bm.quotesapp.QuotesDataResponse
-import com.bm.quotesapp.QuotesResponse
-import com.bm.quotesapp.QuotesResponseListener
+import com.bm.quotesapp.data.QuotesResponse
+import com.bm.quotesapp.listeners.QuotesResponseListener
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -14,8 +12,8 @@ import retrofit2.http.GET
 
 private const val BASE_URL = "https://api.quotable.io/"
 
-class RequestManager() {
-    var retrofit = Retrofit.Builder()
+class RequestManager {
+    private var retrofit = Retrofit.Builder()
         .baseUrl(BASE_URL)
         .addConverterFactory(GsonConverterFactory.create())
         .build()

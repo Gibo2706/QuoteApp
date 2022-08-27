@@ -1,4 +1,4 @@
-package com.bm.quotesapp
+package com.bm.quotesapp.data
 
 data class QuotesResponse(
     var _id: String? = null,
