@@ -20,16 +20,19 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModel
 import com.bm.quotesapp.architecture.QuotesState
 import com.bm.quotesapp.architecture.UIAction
+
 import kotlin.math.roundToInt
+
 
 @Composable
 fun MainQuoteUI(
     state: QuotesState,
     viewModel: ViewModel,
     modifier: Modifier = Modifier,
-    onAction: (UIAction) -> Unit
+    onAction: (UIAction) -> Unit,
 ) {
     var offsetX by remember { mutableStateOf(0f) }
+
     Box(
         modifier = modifier,
         contentAlignment = Alignment.Center
@@ -51,7 +54,7 @@ fun MainQuoteUI(
                         orientation = Orientation.Horizontal,
                         state = rememberDraggableState(
                             onDelta = { delta ->
-                                offsetX += delta/1.75f
+                                offsetX += delta / 1.75f
                                 if (offsetX > 300f || offsetX < -300f) {
                                     offsetX = 0f
                                     onAction(UIAction.SwipeForNewQuote)
@@ -139,5 +142,6 @@ fun MainQuoteUI(
             }
         }
     }
+
 }
 

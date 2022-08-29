@@ -11,13 +11,16 @@ import com.bm.quotesapp.data.QuotesResponse
 import com.bm.quotesapp.listeners.QuotesResponseListener
 import com.bm.quotesapp.managers.RequestManager
 
-class QuotesViewModel: ViewModel() {
+
+class QuotesViewModel : ViewModel() {
     var state by mutableStateOf(QuotesState())
         private set
     var status = MutableLiveData<Boolean?>()
+
     init {
          getData()
     }
+
 
     private fun getData(){
         val listener: QuotesResponseListener = object : QuotesResponseListener {
@@ -33,7 +36,8 @@ class QuotesViewModel: ViewModel() {
                 Log.e("MainActivity - QuoteResponse", message)
             }
         }
-        RequestManager().getRandQuote(listener = listener)
+        for (i in 0..5)
+            RequestManager().getRandQuote(listener = listener)
     }
 
     fun onAction(action: UIAction){
