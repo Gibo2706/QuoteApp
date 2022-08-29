@@ -7,11 +7,14 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.bm.quotesapp.ui.theme.QuotesAppTheme
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.bm.quotesapp.architecture.QuotesViewModel
 import com.bm.quotesapp.ui.MainQuoteUI
+import com.ramcosta.composedestinations.annotation.Destination
 
 
 class MainActivity : ComponentActivity() {
@@ -35,11 +38,8 @@ class MainActivity : ComponentActivity() {
                         .background(color = MaterialTheme.colors.background)
                         .fillMaxSize()
                 )
-
-
             }
         }
     }
-
-
 }
+

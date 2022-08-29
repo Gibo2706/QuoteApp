@@ -2,13 +2,20 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-android-extensions'
+    id 'com.google.devtools.ksp' version '1.6.21-1.0.6'
 }
-allprojects {
-    repositories {
-        mavenCentral()
-        google()
+
+kotlin {
+    sourceSets {
+        debug {
+            kotlin.srcDir("build/generated/ksp/debug/kotlin")
+        }
+        release {
+            kotlin.srcDir("build/generated/ksp/release/kotlin")
+        }
     }
 }
+
 android {
     compileSdk 32
 
@@ -31,6 +38,13 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    applicationVariants.all { variant ->
+        kotlin.sourceSets {
+            getByName(variant.name) {
+                kotlin.srcDir("build/generated/ksp/${variant.name}/kotlin")
+            }
+        }
+    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -42,7 +56,7 @@ android {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion compose_version
+        kotlinCompilerExtensionVersion "1.2.0-beta03"
     }
     packagingOptions {
         resources {
@@ -87,7 +101,17 @@ dependencies {
 
     // Swipe
     implementation "me.saket.swipe:swipe:1.0.0"
-
+    // Navigation compose
+    def nav_version = "2.5.1"
+    implementation("androidx.navigation:navigation-compose:$nav_version")
+    implementation("androidx.navigation:navigation-runtime-ktx:$nav_version")
+    implementation("androidx.navigation:navigation-ui-ktx:$nav_version")
+    implementation("androidx.navigation:navigation-dynamic-features-fragment:$nav_version")
+    implementation("androidx.navigation:navigation-dynamic-features-runtime:$nav_version")
+    implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
+    implementation 'io.github.raamcosta.compose-destinations:core:1.6.16-beta'
+    ksp 'io.github.raamcosta.compose-destinations:ksp:1.6.16-beta'
+    // Material3
 
     // optional - Test helpers for LiveData
 
