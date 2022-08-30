@@ -1,5 +1,7 @@
 package com.bm.quotesapp.ui
 
+import android.app.NotificationManager
+import androidx.activity.ComponentActivity
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.draggable
@@ -20,6 +22,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModel
 import com.bm.quotesapp.architecture.home.QuotesState
 import com.bm.quotesapp.architecture.UIAction
+import com.bm.quotesapp.notifications.Notifications
 
 import kotlin.math.roundToInt
 
@@ -134,7 +137,9 @@ fun MainQuoteUI(
                 }
                 val mContext = LocalContext.current
                 Button(
-                    onClick = { onAction(UIAction.ShareQuote(mContext)) },
+                    onClick = {
+                        onAction(UIAction.ShareQuote(mContext))
+                              },
                     modifier = Modifier.padding(horizontal = 16.dp)
                 ) {
                     Text(text = "Share")

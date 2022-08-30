@@ -2,10 +2,6 @@ package com.bm.quotesapp.ui.categories
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.Orientation
-import androidx.compose.foundation.gestures.ScrollableState
-import androidx.compose.foundation.gestures.rememberScrollableState
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -19,18 +15,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.bm.quotesapp.architecture.UIAction
 import com.bm.quotesapp.architecture.categories.CategoriesState
 import com.bm.quotesapp.architecture.categories.CategoriesViewModel
-import kotlinx.coroutines.Delay
-import kotlinx.coroutines.InternalCoroutinesApi
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.delay
-import java.util.*
-import kotlin.concurrent.timer
 
-@OptIn(InternalCoroutinesApi::class)
 @Composable
 fun CategoriesView(
     modifier: Modifier = Modifier,

@@ -1,6 +1,10 @@
 package com.bm.quotesapp
 
 import android.annotation.SuppressLint
+import android.app.AlarmManager
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -16,15 +20,24 @@ import com.bm.quotesapp.architecture.home.QuotesViewModel
 import com.bm.quotesapp.navigation.AppNavGraph
 import com.bm.quotesapp.navigation.NavigationActions
 import com.bm.quotesapp.navigation.Routes
+import com.bm.quotesapp.notifications.Notifications
+import com.bm.quotesapp.receivers.AlarmReceiver
 import com.bm.quotesapp.ui.appBottomBar.AppBottomBar
 
 
 
+private const val HALF_DAY = 43200000L
+
 class MainActivity : ComponentActivity() {
+
     @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent {
+        val notificationManager: NotificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+        Notifications().initChannel(notificationManager = notificationManager)
+
+
+            setContent {
             QuotesAppTheme {
                 val viewModel = viewModel<QuotesViewModel>()
                 val state = viewModel.state
