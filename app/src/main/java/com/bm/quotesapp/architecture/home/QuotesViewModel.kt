@@ -1,4 +1,4 @@
-package com.bm.quotesapp.architecture
+package com.bm.quotesapp.architecture.home
 
 import android.content.Intent
 import android.util.Log
@@ -7,6 +7,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.bm.quotesapp.architecture.UIAction
 import com.bm.quotesapp.data.QuotesResponse
 import com.bm.quotesapp.listeners.QuotesResponseListener
 import com.bm.quotesapp.managers.RequestManager
@@ -36,8 +37,7 @@ class QuotesViewModel : ViewModel() {
                 Log.e("MainActivity - QuoteResponse", message)
             }
         }
-        for (i in 0..5)
-            RequestManager().getRandQuote(listener = listener)
+        RequestManager().getRandQuote(listener = listener)
     }
 
     fun onAction(action: UIAction){

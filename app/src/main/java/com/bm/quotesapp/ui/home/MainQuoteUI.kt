@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModel
-import com.bm.quotesapp.architecture.QuotesState
+import com.bm.quotesapp.architecture.home.QuotesState
 import com.bm.quotesapp.architecture.UIAction
 
 import kotlin.math.roundToInt

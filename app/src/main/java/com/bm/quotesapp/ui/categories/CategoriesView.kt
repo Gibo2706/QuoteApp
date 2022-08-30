@@ -2,27 +2,47 @@ package com.bm.quotesapp.ui.categories
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.ScrollableState
+import androidx.compose.foundation.gestures.rememberScrollableState
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.material.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.bm.quotesapp.architecture.UIAction
+import com.bm.quotesapp.architecture.categories.CategoriesState
+import com.bm.quotesapp.architecture.categories.CategoriesViewModel
+import kotlinx.coroutines.Delay
+import kotlinx.coroutines.InternalCoroutinesApi
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.delay
+import java.util.*
+import kotlin.concurrent.timer
 
+@OptIn(InternalCoroutinesApi::class)
 @Composable
 fun CategoriesView(
     modifier: Modifier = Modifier,
-    onAction: (UIAction) -> Unit
+    onAction: (UIAction) -> Unit,
+    viewModel: CategoriesViewModel,
+    catState: CategoriesState,
 ){
+    val openDialog = remember {
+        mutableStateOf(false)
+    }
+
+
     Box(
         modifier = modifier,
         contentAlignment = Alignment.TopStart
@@ -39,6 +59,7 @@ fun CategoriesView(
                     .padding(8.dp)
                     .clickable(onClick = {
                         onAction(UIAction.CategorySelected("Inspirational"))
+                        openDialog.value = true
                     })
                     .aspectRatio(6f),
                 shape = RoundedCornerShape(8.dp),
@@ -64,6 +85,8 @@ fun CategoriesView(
                     .padding(8.dp)
                     .clickable(onClick = {
                         onAction(UIAction.CategorySelected("Motivational"))
+                        openDialog.value = true
+
                     })
                     .aspectRatio(6f),
                 shape = RoundedCornerShape(8.dp),
@@ -89,6 +112,8 @@ fun CategoriesView(
                     .padding(8.dp)
                     .clickable(onClick = {
                         onAction(UIAction.CategorySelected("Love"))
+                        openDialog.value = true
+
                     })
                     .aspectRatio(6f),
                 shape = RoundedCornerShape(8.dp),
@@ -110,6 +135,95 @@ fun CategoriesView(
                 )
             }
 
+            Card(
+                modifier = Modifier
+                    .padding(8.dp)
+                    .clickable(onClick = {
+                        onAction(UIAction.CategorySelected("Technology"))
+                        openDialog.value = true
+
+                    })
+                    .aspectRatio(6f),
+                shape = RoundedCornerShape(8.dp),
+                backgroundColor = Color.Magenta,
+                border = BorderStroke(
+                    color = MaterialTheme.colors.onBackground,
+                    width = 1.dp
+                )
+            ) {
+                Text(
+                    text = "Technology",
+                    modifier = Modifier.padding(8.dp),
+                    style = MaterialTheme.typography.body1,
+                    color = MaterialTheme.colors.onBackground,
+                    textAlign = TextAlign.Center,
+                    fontFamily = FontFamily.Monospace,
+                    fontSize = 32.sp,
+                    fontWeight = FontWeight.Bold,
+                )
+            }
+            Card(
+                modifier = Modifier
+                    .padding(8.dp)
+                    .clickable(onClick = {
+                        onAction(UIAction.CategorySelected("Life"))
+                        openDialog.value = true
+
+                    })
+                    .aspectRatio(6f),
+                shape = RoundedCornerShape(8.dp),
+                backgroundColor = Color.Yellow,
+                border = BorderStroke(
+                    color = MaterialTheme.colors.onBackground,
+                    width = 1.dp
+                )
+            ) {
+                Text(
+                    text = "Life",
+                    modifier = Modifier.padding(8.dp),
+                    style = MaterialTheme.typography.body1,
+                    color = MaterialTheme.colors.onBackground,
+                    textAlign = TextAlign.Center,
+                    fontFamily = FontFamily.Monospace,
+                    fontSize = 32.sp,
+                    fontWeight = FontWeight.Bold,
+                )
+            }
+        }
+        val mContext = LocalContext.current
+        if(openDialog.value){
+            AlertDialog(
+                onDismissRequest = {
+                    openDialog.value = false
+                },
+                title = {
+                    if(catState.tags.isNotEmpty())
+                        Text(text = catState.tags.last().uppercase())
+                    else
+                        Text(text = "No Category Selected")
+                },
+                text = {
+                    Text(text = catState.content + " - " + catState.author)
+                },
+                confirmButton = {
+                    Button(onClick = {
+                        openDialog.value = false
+                        onAction(UIAction.ShareQuote(mContext))
+                    }) {
+                        Text(text = "Share")
+                    }
+                },
+                dismissButton = {
+                    Button(onClick = {
+                        openDialog.value = false
+                    }) {
+                        Text(text = "Close")
+                    }
+                },
+                backgroundColor = MaterialTheme.colors.background,
+                contentColor = MaterialTheme.colors.onBackground,
+                shape = RoundedCornerShape(8.dp)
+            )
         }
     }
 }

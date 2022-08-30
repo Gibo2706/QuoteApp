@@ -1,4 +1,4 @@
-package com.bm.quotesapp.architecture
+package com.bm.quotesapp.architecture.home
 
 data class QuotesState(
     val content: String? = "",

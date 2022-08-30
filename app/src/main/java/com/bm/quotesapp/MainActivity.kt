@@ -12,7 +12,7 @@ import com.bm.quotesapp.ui.theme.QuotesAppTheme
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.bm.quotesapp.architecture.QuotesViewModel
+import com.bm.quotesapp.architecture.home.QuotesViewModel
 import com.bm.quotesapp.navigation.AppNavGraph
 import com.bm.quotesapp.navigation.NavigationActions
 import com.bm.quotesapp.navigation.Routes
