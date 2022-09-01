@@ -10,6 +10,9 @@ sealed class UIAction{
     // Categories
     data class CategorySelected(val mCategory: String) : UIAction()
 
+    // TopBar
+    data class TopBarClicked(val mContext: Context) : UIAction()
+
 
 
 }
