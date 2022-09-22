@@ -7,7 +7,9 @@ import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.draggable
 import androidx.compose.foundation.gestures.rememberDraggableState
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -43,7 +45,8 @@ fun MainQuoteUI(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(8.dp),
+                .padding(8.dp)
+                .verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -72,7 +75,8 @@ fun MainQuoteUI(
                             offsetX = 0f
                         },
                         startDragImmediately = false
-                    ),
+                    )
+                    .weight(1f, fill = false),
                 border = BorderStroke(
                     color = MaterialTheme.colors.onSurface,
                     width = 1.dp
