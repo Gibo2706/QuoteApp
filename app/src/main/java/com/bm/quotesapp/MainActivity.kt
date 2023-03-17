@@ -6,6 +6,7 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -30,7 +31,6 @@ import com.bm.quotesapp.navigation.AppNavGraph
 import com.bm.quotesapp.navigation.NavigationActions
 import com.bm.quotesapp.navigation.Routes
 import com.bm.quotesapp.notifications.Notifications
-import com.bm.quotesapp.receivers.AlarmReceiver
 import com.bm.quotesapp.ui.appBottomBar.AppBottomBar
 import com.bm.quotesapp.ui.appTopBar.AppTopBar
 

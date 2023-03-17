@@ -14,10 +14,11 @@ import com.bm.quotesapp.architecture.home.QuotesState
 import com.bm.quotesapp.architecture.home.QuotesViewModel
 import com.bm.quotesapp.ui.MainQuoteUI
 import com.bm.quotesapp.ui.categories.CategoriesView
+import java.util.stream.Stream
 
 @Composable
 fun AppNavGraph(
-    state: QuotesState,
+    state: ArrayList<QuotesState>,
     viewModel: QuotesViewModel,
     navController: NavHostController,
 ) {

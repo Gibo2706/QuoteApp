@@ -19,6 +19,7 @@ class RequestManager {
         .build()
 
     fun getRandQuote(listener: QuotesResponseListener){
+
         val call = retrofit.create(CallQuotes::class.java).callRandomQuote()
         call.enqueue(object: Callback<QuotesResponse>{
             override fun onResponse(

@@ -7,6 +7,7 @@ import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.draggable
 import androidx.compose.foundation.gestures.rememberDraggableState
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -24,20 +25,22 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModel
 import com.bm.quotesapp.architecture.home.QuotesState
 import com.bm.quotesapp.architecture.UIAction
+import com.bm.quotesapp.architecture.home.QuotesViewModel
 import com.bm.quotesapp.notifications.Notifications
+import java.util.stream.Stream
 
 import kotlin.math.roundToInt
 
 
 @Composable
 fun MainQuoteUI(
-    state: QuotesState,
-    viewModel: ViewModel,
+    state: ArrayList<QuotesState>,
+    viewModel: QuotesViewModel,
     modifier: Modifier = Modifier,
     onAction: (UIAction) -> Unit,
 ) {
     var offsetX by remember { mutableStateOf(0f) }
-
+    val stateM = viewModel.state
     Box(
         modifier = modifier,
         contentAlignment = Alignment.Center
@@ -64,7 +67,6 @@ fun MainQuoteUI(
                                 if (offsetX > 300f || offsetX < -300f) {
                                     offsetX = 0f
                                     onAction(UIAction.SwipeForNewQuote)
-
                                 }
                             }
                         ),
@@ -74,9 +76,9 @@ fun MainQuoteUI(
                         onDragStarted = {
                             offsetX = 0f
                         },
-                        startDragImmediately = false
+                        startDragImmediately = false,
                     )
-                    .weight(1f, fill = false),
+                    ,
                 border = BorderStroke(
                     color = MaterialTheme.colors.onSurface,
                     width = 1.dp
@@ -94,9 +96,9 @@ fun MainQuoteUI(
                         verticalArrangement = Arrangement.Center,
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        state.content?.let {
+                        stateM.firstOrNull()?.let {
                             Text(
-                                text = "\"$it\"",
+                                text = "\"${it.content}\"",
                                 modifier = Modifier
                                     .padding(horizontal = 16.dp),
                                 fontSize = 28.sp,
@@ -113,9 +115,9 @@ fun MainQuoteUI(
                             color = MaterialTheme.colors.onSurface.copy(alpha = 0.5f),
                             thickness = 1.dp
                         )
-                        state.author?.let {
+                        stateM.firstOrNull()?.let {
                             Text(
-                                text = "Author: $it",
+                                text = "Author: ${it.author}",
                                 modifier = Modifier.padding(horizontal = 16.dp),
                                 fontSize = 18.sp,
                                 fontWeight = FontWeight.Bold,
@@ -134,7 +136,7 @@ fun MainQuoteUI(
                     onClick = {
                         onAction(UIAction.SwipeForNewQuote)
                         offsetX = 0f
-                              },
+                    },
                     modifier = Modifier.padding(horizontal = 16.dp)
                 ) {
                     Text(text = "New Quote")
@@ -143,7 +145,7 @@ fun MainQuoteUI(
                 Button(
                     onClick = {
                         onAction(UIAction.ShareQuote(mContext))
-                              },
+                    },
                     modifier = Modifier.padding(horizontal = 16.dp)
                 ) {
                     Text(text = "Share")
