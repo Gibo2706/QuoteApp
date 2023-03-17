@@ -3,6 +3,8 @@ package com.bm.quotesapp.ui.categories
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
@@ -29,155 +31,95 @@ fun CategoriesView(
     val openDialog = remember {
         mutableStateOf(false)
     }
+    val cats1 = remember {
+        listOf("Motivational", "Inspirational", "Love", "Technology", "Life")
+    }
 
+
+    val cats2 = remember{
+        listOf("Success", "Friendship", "Wisdom", "Happiness", "Funny")
+    }
 
     Box(
         modifier = modifier,
         contentAlignment = Alignment.TopStart
     ) {
-        Column(
+        LazyRow(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 64.dp, bottom = 16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
-            Card(
-                modifier = Modifier
-                    .padding(8.dp)
-                    .clickable(onClick = {
-                        onAction(UIAction.CategorySelected("Inspirational"))
-                        openDialog.value = true
-                    })
-                    .aspectRatio(6f),
-                shape = RoundedCornerShape(8.dp),
-                backgroundColor = Color.Blue,
-                border = BorderStroke(
-                    color = MaterialTheme.colors.onBackground,
-                    width = 1.dp
-                )
-            ) {
-                Text(
-                    text = "Inspirational",
-                    modifier = Modifier.padding(8.dp),
-                    style = MaterialTheme.typography.body1,
-                    color = MaterialTheme.colors.onBackground,
-                    textAlign = TextAlign.Center,
-                    fontFamily = FontFamily.Monospace,
-                    fontSize = 32.sp,
-                    fontWeight = FontWeight.Bold,
-                )
+                .fillMaxSize()
+                .padding(8.dp),
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically
+        ){
+            item {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    verticalArrangement = Arrangement.SpaceEvenly
+                ) {
+                    cats1.forEach { cat ->
+                        Card(
+                            shape = RoundedCornerShape(8.dp),
+                            border = BorderStroke(1.dp, Color.Gray),
+                            modifier = Modifier
+                                .padding(8.dp)
+                                .clickable {
+                                    onAction(UIAction.CategorySelected(cat))
+                                    openDialog.value = true
+                                }
+                                .width(180.dp)
+                        ) {
+                            Text(
+                                text = cat,
+                                fontSize = 16.sp,
+                                fontWeight = FontWeight.Bold,
+                                fontFamily = FontFamily.SansSerif,
+                                textAlign = TextAlign.Center,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(16.dp)
+                            )
+                        }
+                    }
+                }
             }
-            Card(
-                modifier = Modifier
-                    .padding(8.dp)
-                    .clickable(onClick = {
-                        onAction(UIAction.CategorySelected("Motivational"))
-                        openDialog.value = true
-
-                    })
-                    .aspectRatio(6f),
-                shape = RoundedCornerShape(8.dp),
-                backgroundColor = Color.Green,
-                border = BorderStroke(
-                    color = MaterialTheme.colors.onBackground,
-                    width = 1.dp
-                )
-            ) {
-                Text(
-                    text = "Motivational",
-                    modifier = Modifier.padding(8.dp),
-                    style = MaterialTheme.typography.body1,
-                    color = MaterialTheme.colors.onBackground,
-                    textAlign = TextAlign.Center,
-                    fontFamily = FontFamily.Monospace,
-                    fontSize = 32.sp,
-                    fontWeight = FontWeight.Bold,
-                )
-            }
-            Card(
-                modifier = Modifier
-                    .padding(8.dp)
-                    .clickable(onClick = {
-                        onAction(UIAction.CategorySelected("Love"))
-                        openDialog.value = true
-
-                    })
-                    .aspectRatio(6f),
-                shape = RoundedCornerShape(8.dp),
-                backgroundColor = Color.Red,
-                border = BorderStroke(
-                    color = MaterialTheme.colors.onBackground,
-                    width = 1.dp
-                )
-            ) {
-                Text(
-                    text = "Love",
-                    modifier = Modifier.padding(8.dp),
-                    style = MaterialTheme.typography.body1,
-                    color = MaterialTheme.colors.onBackground,
-                    textAlign = TextAlign.Center,
-                    fontFamily = FontFamily.Monospace,
-                    fontSize = 32.sp,
-                    fontWeight = FontWeight.Bold,
-                )
-            }
-
-            Card(
-                modifier = Modifier
-                    .padding(8.dp)
-                    .clickable(onClick = {
-                        onAction(UIAction.CategorySelected("Technology"))
-                        openDialog.value = true
-
-                    })
-                    .aspectRatio(6f),
-                shape = RoundedCornerShape(8.dp),
-                backgroundColor = Color.Magenta,
-                border = BorderStroke(
-                    color = MaterialTheme.colors.onBackground,
-                    width = 1.dp
-                )
-            ) {
-                Text(
-                    text = "Technology",
-                    modifier = Modifier.padding(8.dp),
-                    style = MaterialTheme.typography.body1,
-                    color = MaterialTheme.colors.onBackground,
-                    textAlign = TextAlign.Center,
-                    fontFamily = FontFamily.Monospace,
-                    fontSize = 32.sp,
-                    fontWeight = FontWeight.Bold,
-                )
-            }
-            Card(
-                modifier = Modifier
-                    .padding(8.dp)
-                    .clickable(onClick = {
-                        onAction(UIAction.CategorySelected("Life"))
-                        openDialog.value = true
-
-                    })
-                    .aspectRatio(6f),
-                shape = RoundedCornerShape(8.dp),
-                backgroundColor = Color.Yellow,
-                border = BorderStroke(
-                    color = MaterialTheme.colors.onBackground,
-                    width = 1.dp
-                )
-            ) {
-                Text(
-                    text = "Life",
-                    modifier = Modifier.padding(8.dp),
-                    style = MaterialTheme.typography.body1,
-                    color = MaterialTheme.colors.onBackground,
-                    textAlign = TextAlign.Center,
-                    fontFamily = FontFamily.Monospace,
-                    fontSize = 32.sp,
-                    fontWeight = FontWeight.Bold,
-                )
+            item {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    verticalArrangement = Arrangement.SpaceEvenly
+                ) {
+                    cats2.forEach { cat ->
+                        Card(
+                            shape = RoundedCornerShape(8.dp),
+                            border = BorderStroke(1.dp, Color.Gray),
+                            modifier = Modifier
+                                .padding(8.dp)
+                                .clickable {
+                                    onAction(UIAction.CategorySelected(cat))
+                                    openDialog.value = true
+                                }
+                                .width(180.dp)
+                        ) {
+                            Text(
+                                text = cat,
+                                fontSize = 16.sp,
+                                fontWeight = FontWeight.Bold,
+                                fontFamily = FontFamily.SansSerif,
+                                textAlign = TextAlign.Center,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(16.dp)
+                            )
+                        }
+                    }
+                }
             }
         }
+
+
         val mContext = LocalContext.current
         if(openDialog.value){
             AlertDialog(

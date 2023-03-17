@@ -19,7 +19,8 @@ class CategoriesViewModel: ViewModel() {
     init {
         getData()
     }
-    private fun getData(){
+    fun getData(): Boolean{
+        var result = false
         val listener: QuotesResponseListener = object : QuotesResponseListener {
             override fun onSuccess(response: QuotesResponse, message: String) {
                 Log.d("QuotesViewModel", "Data collected")
@@ -28,6 +29,7 @@ class CategoriesViewModel: ViewModel() {
                     author = response.author,
                     tags = response.tags,
                 )
+                result = true
             }
 
             override fun onFailure(message: String) {
@@ -35,6 +37,7 @@ class CategoriesViewModel: ViewModel() {
             }
         }
         RequestManager().getRandQuote(listener = listener)
+        return result
     }
     private fun getSpecQuote(tags:String){
         val listener: QuotesResponseListener = object : QuotesResponseListener {
